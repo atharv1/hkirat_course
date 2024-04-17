@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+
+    //gonna add debouncing to the code - 
+    let timeout;
+    function debouncePopulateDiv(){
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){
+            populateDiv();
+        },500);
+    }
+
+    async function populateDiv(){
+        const val1 = document.getElementById("principal").value;
+        const val2 = document.getElementById("rate").value;
+        const val3 = document.getElementById("time").value;
+        //fetch
+        const response = await fetch("http://localhost:3000/interest?principal="+val1+"&rate="+val2+"&time="+val3);
+        const sum = await response.text();
+        document.getElementById("finalSum").innerHTML=sum;
+    }
+</script>
+<body>
+    <input oninput="debouncePopulateDiv()" type="text" placeholder="Principal" id="principal"><br><br>
+    <input oninput="debouncePopulateDiv()" type="text" placeholder="Rate" id="rate"><br><br>
+    <input oninput="debouncePopulateDiv()" type="text" placeholder="Time" id="time"><br><br>
+    <!-- <button onclick="populateDiv()">Caluculate Sum</button><br><br> -->
+    <div id="finalSum"></div>
+</body>
+</html>

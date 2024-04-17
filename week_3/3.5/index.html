@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <form action="" id="LoginForm">
+            First name:<input type="text" name="fname" value="Donald"><br>
+            Last name:<input type="text" name="lname" value="Duck"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <p>Click "Try it"</p>
+        <button onClick="myFunction()">Try it</button>
+        <p id="displayspace"></p>
+
+        <script>
+            function myFunction(){
+                var x = document.getElementById("LoginForm").elements.length;  //counts elements in form
+                var y = document.getElementById("LoginForm").elements[0].value;//gives the firstName
+                document.getElementById("displayspace").innerHTML = "Found " + x + " is " + y;
+
+                const para = document.createElement("p");//after the clickFunc occurs then this displays
+                para.innerHTML = "Hello";
+                document.body.appendChild(para);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+    let timeout;
+    function debouncePopulateDiv(){
+        //throttle -
+        let tStart = true;
+        
+    }
+    async function populateDiv(){
+        const val1 = document.getElementById("firstValue").value;
+        const val2 = document.getElementById("secondValue").value;
+        //fetch
+        const response = await fetch("https://sum-server.100xdevs.com/sum?a="+val1+"&b="+val2);
+        const sum = await response.json();
+        document.getElementById("finalSum").innerHTML=sum;
+    }
+</script>
+<body>
+    <input oninput="debouncePopulateDiv()" type="text" placeholder="First number" id="firstValue"><br><br>
+    <input oninput="debouncePopulateDiv()" type="text" placeholder="Second number" id="secondValue"><br><br>
+    <div id="finalSum"></div>
+</body>
+</html>

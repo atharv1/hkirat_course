@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <input type="text" id="title" placeholder="Todo title"></input> <br /><br />
+  <input type="text" id="description" placeholder="Todo description"></input> <br /><br />
+  <button onclick="addTodo()">Add todo</button>
+
+  <div id="container">
+
+  </div>
+
+  <script>
+    let globalId = 1;   //flag to know the button to be marked as done
+
+    // function markAsDone(todoId) {
+    //   const parent = document.getElementById(todoId);
+    //   parent.children[2].innerHTML = "Done!"
+    // }
+
+    function createChild(title, description, id) {
+      const child = document.createElement("div");
+      const firstGrandParent = document.createElement("div");
+      firstGrandParent.innerHTML = title;
+      const secondGrandParent = document.createElement("div");
+      secondGrandParent.innerHTML = description;
+      const thirdGrandParent = document.createElement("button");
+      thirdGrandParent.innerHTML = "Mark as done";
+      thirdGrandParent.setAttribute("onclick", `markAsDone(${id})`);//sets onlick attribute and the markAsDone function is called
+      child.appendChild(firstGrandParent);
+      child.appendChild(secondGrandParent);
+      child.appendChild(thirdGrandParent)
+      child.setAttribute("id", id);
+      return child;
+    }
+    //State will always be an array
+    //Every element of state should have a title,dexcription and id
+    function updateDomAccToState(state){
+      const parent = document.getElementById("container");
+      parent.innerHTML="";
+      for(let i=0; i<state.length; i++){
+        const child = createChild(state[i].title, state[i].description, state[i].id);
+        parent.appendChild(child);
+      }
+    }
+    // updateDomAccToState([{
+    //   title:"go to gym",
+    //   description: "go to gym from 5-7",
+    //   id: 1
+    // },{
+    //   title:"go to gym 2",
+    //   description: "go to gym from 5-7",
+    //   id: 1
+    // }]);
+    //        OR -----------
+    window.setInterval(async function(){
+      const res = await fetch("https://sum-server.100xdevs.com/todos");
+      const json = await res.json();
+      updateDomAccToState(json.todos);
+    },5000)
+  </script>
+</body>
+
+</html>

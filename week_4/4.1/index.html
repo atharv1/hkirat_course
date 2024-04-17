@@ -1,0 +1,68 @@
+<html>
+    <body>
+        <script>
+            //perform debouncing - 
+            //delay the call to populateDiv until ive not been called for 100ms
+            //and i have been called atleast once
+            let timeout;
+            function debouncePopulateDiv(){
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    populateDiv();
+                },1000)
+            }
+
+            function populateDiv(){
+                const a = document.getElementById("firstNumber").value;
+                const b = document.getElementById("secondNumber").value;
+                const element = document.getElementById("finalSum");
+                console.log(element);//we get a DOM object i.e <div>.....</div>
+                // element.innerHTML=parseInt(a) + parseInt(b);
+                //fetch
+                fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)//if wanna use localhost node server then install and use the cors module.
+                .then(function(response){
+                    console.log(response)
+                    response.text()
+                        .then(function(ans){
+                            console.log(ans);
+                            document.getElementById("finalSum").innerHTML=ans;
+                        })
+                });
+                // OR
+                async function populateDiv2(){
+                    const a = document.getElementById("firstNumber").value;
+                    const b = document.getElementById("secondNumber").value;
+                    const response = await fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b)
+                    const ans = await response.text();
+                    document.getElementById("finalSum").innerHTML= ans;
+                }
+            }
+        </script>
+
+        <!-- Why we need DOM?...we cant do these changes without DOM -->
+        <input type="text" id="firstNumber" placeholder="First number"><br>
+        <input type="text" id="secondNumber" placeholder="Second number"><br>
+        <button onclick="populateDiv()">Caluculate Sum</button><br>
+        <div id="finalSum"></div>
+
+        <!-- Why we need Classes in html, as it helps in solving DRY principal -->
+        <style>
+            .container{
+                background-color: red;
+                font-size: 100;
+                padding: 20px;
+                margin: 20px;
+            }
+        </style>
+
+        <div class="container">
+            hi there
+        </div>
+        <div class="container">
+            hi there 2
+        </div>
+        <!-- IDs are used for adding specific styles for a element -->
+        <!-- IDs let us access elements via the DOM API -->
+
+    </body>
+</html>
